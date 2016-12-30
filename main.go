@@ -9,7 +9,6 @@ package main
 
 import (
 	"go_auth_gin/controllers"
-	"go_auth_gin/models"
 	"gopkg.in/appleboy/gin-jwt.v2"
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
