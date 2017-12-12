@@ -7,15 +7,15 @@
 */
 package controllers
 
-import(
-	"go_auth_gin/models"
+import (
+	"go_auth_api/models"
 
 	"github.com/gin-gonic/gin"
 )
 
 var users models.Users
 
-func UserAuth(username string, password string) (bool) {
+func UserAuth(username string, password string) bool {
 	status := false
 	for _, user := range users {
 		if user.Username == username && user.Password == password {
@@ -25,10 +25,10 @@ func UserAuth(username string, password string) (bool) {
 	return status
 }
 
-func GetUsers(c *gin.Context){
+func GetUsers(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"status":  "OK",
-		"users": users,
+		"status": "OK",
+		"users":  users,
 	})
 }
 
@@ -43,7 +43,7 @@ func CreateUser(c *gin.Context) {
 	users = append(users, user)
 
 	c.JSON(200, gin.H{
-		"status":  "posted",
-		"users": users,
+		"status": "posted",
+		"users":  users,
 	})
 }

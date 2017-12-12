@@ -8,12 +8,14 @@
 package main
 
 import (
-	"go_auth_gin/controllers"
-	"gopkg.in/appleboy/gin-jwt.v2"
-	"github.com/fvbock/endless"
-	"github.com/gin-gonic/gin"
+	"go_auth_api/controllers"
 	"os"
 	"time"
+
+	jwt "gopkg.in/appleboy/gin-jwt.v2"
+
+	"github.com/fvbock/endless"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -31,7 +33,7 @@ func main() {
 		Timeout:    time.Hour,
 		MaxRefresh: time.Hour * 24,
 		Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
-			if controllers.UserAuth(userId, password){
+			if controllers.UserAuth(userId, password) {
 				return userId, true
 			}
 
@@ -64,7 +66,7 @@ func main() {
 	}
 
 	/*
-	======================Declare your route================
+		======================Declare your route================
 	*/
 	router.POST("/login", authMiddleware.LoginHandler)
 	router.POST("/register", controllers.CreateUser)
@@ -74,6 +76,7 @@ func main() {
 		auth.GET("/users", controllers.GetUsers)
 		auth.GET("/hello", controllers.HelloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+		auth.GET("/check", controllers.CheckHandler)
 	}
 
 	endless.ListenAndServe(":"+port, router)
