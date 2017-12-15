@@ -39,6 +39,7 @@ func main() {
 
 			return userId, false
 		},
+
 		Authorizator: func(userId string, c *gin.Context) bool {
 			if userId == "admin" {
 				return true
@@ -74,10 +75,11 @@ func main() {
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/users", controllers.GetUsers)
-		auth.GET("/hello", controllers.HelloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
 		auth.GET("/check", controllers.CheckHandler)
+		auth.GET("/check_role", controllers.CheckRole)
 	}
+	auth.GET("/hello", controllers.HelloHandler)
 
 	endless.ListenAndServe(":"+port, router)
 

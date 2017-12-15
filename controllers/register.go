@@ -25,6 +25,18 @@ func UserAuth(username string, password string) bool {
 	return status
 }
 
+func CheckRole(c *gin.Context) {
+	// status := false
+	// for _, userRole := range userRoles {
+	// 	if userRole.Id == role {
+	// 		status = true
+	// 	}
+	// }
+	// return status
+	c.JSON(200, gin.H{
+		"Allow": "true",
+	})
+}
 func GetUsers(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status": "OK",
@@ -33,13 +45,17 @@ func GetUsers(c *gin.Context) {
 }
 
 func CreateUser(c *gin.Context) {
-
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	roleId := c.PostForm("role_id")
+	roleName := c.PostForm("role_name")
 
 	var user models.User
 	user.Username = username
 	user.Password = password
+	user.Role = []models.Role{
+		{Id: roleId, Name: roleName},
+	}
 	users = append(users, user)
 
 	c.JSON(200, gin.H{
