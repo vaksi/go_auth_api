@@ -21,7 +21,9 @@ import (
 func main() {
 
 	port := os.Getenv("PORT")
-	port = "3100"
+	if port == "" {
+		port = "3100"
+	}
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
